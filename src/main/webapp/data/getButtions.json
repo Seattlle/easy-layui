@@ -1,0 +1,38 @@
+{
+  "vo": [
+    {
+      "buttonId": "d8efd925-bf15-4b7d-af20-02bb335599e5",
+      "menuId": "d2634d9b-0e64-41d8-a413-067d2b7b322a",
+      "name": "新增",
+      "className": "",
+      "methodName": "distributeCodes",
+      "buttonIcon": "",
+      "jsMethodName": "distributeCodes",
+      "sort": 1,
+      "remark": ""
+    },{
+      "buttonId": "d8efd925-bf15-4b7d-af20-02bb335599e5",
+      "menuId": "d2634d9b-0e64-41d8-a413-067d2b7b322a",
+      "name": "修改",
+      "className": "",
+      "methodName": "synAttached",
+      "buttonIcon": "",
+      "jsMethodName": "deliver",
+      "sort": 1,
+      "remark": ""
+    },{
+      "buttonId": "d8efd925-bf15-4b7d-af20-02bb335599e5",
+      "menuId": "d2634d9b-0e64-41d8-a413-067d2b7b322a",
+      "name": "删除",
+      "className": "layui-btn-danger",
+      "methodName": "synAttached",
+      "buttonIcon": "",
+      "jsMethodName": "invalid",
+      "sort": 1,
+      "remark": ""
+    }
+  ],
+  	"code":200,
+	"msg":"操作成功",
+	"ok":true
+}

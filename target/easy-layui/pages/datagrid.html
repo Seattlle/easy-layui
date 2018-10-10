@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格页面</title>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body class="layui-pages">
+
+   <div id="pages"></div>
+
+<script src="../layui/layui.js"></script>
+<script>
+    layui.use('initPage', function () {
+
+        $("#pages").initPage({
+            searchs:[{
+                title: '行业名称',
+                placeholder: '请输入行业名称搜索',
+                name: 'entryName'
+            },{
+                title: '模板类型',
+                placeholder: '请输入选择模板',
+                name: 'template',
+                type:'select'
+            },{
+                title: '生产日期',
+                placeholder: '请选择日期',
+                name: 'date',
+                type:'date'
+            }],
+            menus:'../data/getButtions.json',
+            table:{
+                url: '../data/datagrid_data1.json',
+                columns: [[
+                    {type: 'numbers',fixed:'left'},
+                    {type: 'checkbox',fixed:'left'},
+                    {field: 'itemid', title: 'Item ID', width: 80,fixed:'left'},
+                    {field: 'status', title: 'status',editor:{type:'select',textField:'title',data:[{"title":"模板一","value":0},{"title":"模板二","value":1},{"title":"模板三","value":2},{"title":"模板四","value":3},{"title":"模板五","value":4}]}},
+                    {field: 'listprice', title: 'List Price', editor:'date'},
+                    {field: 'unitcost', title: 'Unit Cost',editor:'text', sort:true},
+                    {field: 'attr1', title: 'Attribute', width: 250,align:'center',sort:true},
+                    {
+                        field: 'status', title: 'Status', align: 'center',fixed:'right', formatter: function (value, row) {
+                            return value === 1 ? "正常" : "不正常";
+                        }
+                    }
+                ]]
+            }
+        });
+    });
+    
+    function distributeCodes (callback) {
+        console.log('distributeCodes')
+
+        callback&&callback();
+    }
+    function deliver(callback) {
+        console.log('deliver')
+
+        callback&&callback();
+    }
+    function invalid (callback) {
+        console.log('invalid')
+
+        callback&&callback();
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "code":0,
+  "count":12,
+  "vo":[{
+    "name":"正常",
+    "status":1
+  },{
+    "name":"不正常",
+    "status":2
+  }],
+  "ok":true
+}
