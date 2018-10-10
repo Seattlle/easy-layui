@@ -1,0 +1,35 @@
+{
+  "vo": [
+    {
+      "id": "57d8abd1-c679-4128-b335-2c75147ff4a2",
+      "type": "qrcodeApplyStatus",
+      "templateName": "模板一",
+      "value": 0,
+      "sort": 1
+    },
+    {
+      "id": "d20124fe-8462-4d38-a6e3-cbffab65021c",
+      "type": "qrcodeApplyStatus",
+      "templateName": "模板二",
+      "value": 1,
+      "sort": 2
+    }, {
+      "id": "57d8abd1-c679-4128-b335-2c75147ff4a6",
+      "type": "qrcodeApplyStatus",
+      "templateName": "模板三",
+      "value": 2,
+      "sort": 3
+    },
+    {
+      "id": "d20124fe-8462-4d38-a6e3-cbffab65021a",
+      "type": "qrcodeApplyStatus",
+      "templateName": "模板四",
+      "value": 3,
+      "sort": 4
+    }
+  ],
+  "qvo": null,
+  "errCode": 800,
+  "ok":true,
+  "msg": null
+}

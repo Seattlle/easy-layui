@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tabs</title>
+    <style>
+        html,body{height:100%;}
+        .layui-tab{margin:0;}
+    </style>
+    <script src="../assets/js/config.js"></script>
+</head>
+<body class="layui-pages">
+    <div id="tt" class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this not-close">网站设置</li>
+            <li>用户管理</li>
+            <li>权限分配</li>
+            <li>商品管理</li>
+            <li>订单管理</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">内容1</div>
+            <div class="layui-tab-item">内容2</div>
+            <div class="layui-tab-item">内容3</div>
+            <div class="layui-tab-item">内容4</div>
+            <div class="layui-tab-item">内容5</div>
+        </div>
+    </div>
+
+    <!--<a href="javascript:;" class="layui-btn" onclick="$('#tt').tabs('select',3)">选中'商品管理'</a>-->
+    <!--<a href="javascript:;" class="layui-btn" onclick="$('#tt').tabs('del',4)">关闭'订单管理'</a>-->
+    <!--<a href="javascript:;" class="layui-btn add">增加一个</a>-->
+    <!--<a href="javascript:;" class="layui-btn" onclick="console.log($('#tt').tabs('getSelected'));">获取选中Index</a>-->
+    <!--<a href="javascript:;" class="layui-btn exist">存在'订单管理'</a>-->
+
+    <script>
+        Init('tabs', function () {
+
+            var index=0;
+
+            $('.add').on('click',function () {
+                $("#tt").tabs('add',{
+                    title:'网站设置'+index,
+                    content:index++,
+                    iframe:true,
+                    url:'table.html',
+                    closed:true
+                });
+            })
+            $('.exist').on('click',function () {
+               console.log( $("#tt").tabs('exist','订单管理'))
+            })
+        });
+    </script>
+</body>
+</html>

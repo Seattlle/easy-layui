@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>布局</title>
+    <style>
+        .layui-nav{
+            display: inline-block;
+        }
+        .layui-skin-green .layui-logo, .layui-skin-blue .layui-logo {
+            color: #fff;
+            position: relative;
+            float:left;
+        }
+        .layui-skin-green .layui-header {
+            background: #009688;
+        }
+        .layui-skin-blue .layui-header {
+            background: #01AAED;
+        }
+
+        .layui-tab{
+            margin:0;
+        }
+        .layui-main{
+            height: 100%;
+        }
+        .layui-collapse-menu{
+            float:left;
+            width:50px;
+            line-height: 60px;
+            text-align:center;
+            color:rgba(255,255,255,.7);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+<body class="layui-layout-body layui-skin-green">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"></div>
+        <i class="fa fa-bars  tooltip layui-collapse-menu"  data-options="{content:'按钮',position:'top'}" aria-hidden="true" ></i>
+        <ul class="layui-nav" id="top_nav"></ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs tooltip"  data-options="{content:'调色板'}">
+                <a href="javascript:;">
+                    <i class="layui-icon">&#xe66a;</i>
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs tooltip"  data-options="{content:'消息'}">
+                <a href="javascript:;">
+                    <i class="layui-icon">&#xe667;</i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <cite>admin</cite>
+                    <span class="layui-nav-more"></span>
+                </a>
+                <dl class="layui-nav-child layui-anim layui-anim-upbit">
+                    <dd><a >基本资料</a></dd>
+                    <dd><a >修改密码</a></dd>
+                    <hr>
+                    <dd  style="text-align: center;"><a>退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black layui-hover-open">
+        <div class="layui-side-scroll" id="nav-side">
+        </div>
+    </div>
+    <!--<div class="layui-side layui-side-right layui-bg-black">-->
+        <!--<div class="layui-side-scroll">-->
+            <!--<ul class="layui-nav layui-nav-tree" id="tree2">-->
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="table.html">日运营汇总</a>-->
+                <!--</li>-->
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="tabs.html">结算记录</a>-->
+                <!--</li>-->
+                <!--<li class="layui-nav-item"><a href="/agent/">代理管理<span class="layui-nav-more"></span></a>-->
+                    <!--<dl class="layui-nav-child layui-anim layui-anim-upbit">-->
+                        <!--<dd><a href="/pages/backstage/weChat/agentInfo/index.html">代理信息</a></dd>-->
+                        <!--<dd><a href="/pages/backstage/weChat/agentGrade/index.html">代理等级设置</a></dd>-->
+                        <!--<dd><a href="/pages/backstage/weChat/agentEarnings/index.html">代理收益提取</a></dd>-->
+                        <!--<dd><a href="/pages/backstage/weChat/agentAward/index.html">推荐奖励提取</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-body">
+        <div class="layui-main" style="margin:0;overflow: hidden;">
+            <div id="tt" class="layui-tab layui-tab-brief">
+                <ul class="layui-tab-title"></ul>
+                <div class="layui-tab-content" style="padding:0;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script>
+    Init(['layout'], function () {
+        $('#top_nav').nav({
+            url: './data/nav.json',
+            childNode: '#nav-side',
+            open:0,
+            showChild: false,
+            onClick: function (node) {
+                window.currMenu=node.menuId;
+                $("#tt").tabs('add',{
+                    title:node.name||node.title,
+                    iframe:true,
+                    url:node.url,
+                    closed:true
+                });
+            },
+            done:function () {
+                $('.layui-collapse-menu').click();
+            }
+        });
+        // $('#nav-side').nav({
+        //     url: './data/nav.json',
+        //     open: '基础控件',
+        //     showChild: true,
+        //     vertical:true,
+        //     onClick: function (node) {
+        //         $("#tt").tabs('add',{
+        //             title:node.name||node.title,
+        //             iframe:true,
+        //             url:node.url,
+        //             closed:true
+        //         });
+        //     },
+        //     done:function () {
+        //         $('.layui-collapse-menu').click();
+        //     }
+        // });
+
+
+        // $('#tree2').nav({
+        //     onClick: function (node) {
+        //         $("#tt").tabs('add',{
+        //             title:node.name||node.title,
+        //             iframe:true,
+        //             url:node.url,
+        //             closed:true
+        //         });
+        //     }
+        // })
+    });
+</script>
+</body>
+</html>

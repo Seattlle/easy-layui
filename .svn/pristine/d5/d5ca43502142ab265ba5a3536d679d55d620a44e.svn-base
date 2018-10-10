@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+    <style>
+        section {
+            width: 500px;
+            margin:20px;
+        }
+
+
+    </style>
+    <script src="../assets/js/config.js"></script>
+</head>
+<body class="layui-pages">
+<form class="layui-form" id="ff">
+    <section>
+        <input type="text" name="title" required placeholder="请输入标题" autocomplete="off" class="layui-input">
+    </section>
+    <section>
+        <input type="password" name="password" lay-verify="password" placeholder="请输入密码" autocomplete="off"
+               class="layui-input">
+    </section>
+    <section>
+        <div class="layui-form-item">
+            <label class="layui-form-label">输入框</label>
+            <div class="layui-input-block layui-input-group">
+                <div class="layui-input-prepend"><span>http://</span></div>
+                <input type="url" name="url" lay-verify="required|url" placeholder="请输入链接" autocomplete="off"
+                       class="layui-input">
+                <div class="layui-input-append"><span>.com</span></div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="layui-form-item">
+            <label class="layui-form-label">输入框</label>
+            <div class="layui-input-inline layui-input-group">
+                <div class="layui-input-prepend"><span>http://</span></div>
+                <input type="url" name="url" lay-verify="required|url" placeholder="请输入链接" autocomplete="off"
+                       class="layui-input">
+                <div class="layui-input-append"><span>.com</span></div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="layui-form-item">
+            <label class="layui-form-label">输入框</label>
+            <div class="layui-input-block layui-input-group">
+                <div class="layui-input-prepend">
+                    <div class="layui-select-single">
+                        <div class="layui-select-selection">
+                            <input type="hidden" value="day">
+                            <div>
+                                <span class="layui-select-selected-value">Day</span>
+                                <i class="layui-icon">&#xe625;</i>
+                            </div>
+                        </div>
+                        <div class="layui-select-dropdown ">
+                            <ul class="layui-select-dropdown-list">
+                                <li class="layui-select-item layui-select-item-selected">Day</li>
+                                <li class="layui-select-item">Month</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <input type="url" name="url" lay-verify="required|url" placeholder="请输入链接" autocomplete="off"  class="layui-input">
+                <div class="layui-input-append">
+                    <button type="button" class="layui-btn">
+                        <i class="layui-icon">&#xe615;</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+         <div class="layui-input-group" id="inputGroup" data-options="{left:{type:'select',data:['年','月','日'],name:'time'}}"></div>
+    </section>
+    <section>
+        <div class="layui-input-number" step="0.1" min="0" max="10">
+            <div class="layui-input-prepend cut">
+                <i class="layui-icon">&#xe654;</i>
+            </div>
+            <input type="text" value="0" class="layui-input">
+            <div class="layui-input-append add">
+                <i class="layui-icon">&#xe654;</i>
+            </div>
+        </div>
+    </section>
+    <section>
+        <input type="checkbox" name="like[write]" class="like" title="写作">
+        <input type="checkbox" name="like[read]" class="like" title="阅读" checked>
+        <input type="checkbox" name="like[dai]" class="like" title="发呆">
+    </section>
+    <section>
+        <input type="checkbox" name="xxx" lay-skin="switch">
+        <input type="checkbox" name="yyy" lay-skin="switch" lay-text="ON|OFF" checked>
+        <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+        <input type="checkbox" name="aaa" lay-skin="switch" disabled>
+    </section>
+    <section>
+        <input type="radio" name="sex" value="男" title="男">
+        <input type="radio" name="sex" value="女" title="女" checked>
+    </section>
+    <section>
+        <div class="layui-radio-group">
+            <div class="layui-radio-item">
+                <input type="radio" tabindex="-1" name="like_city" class="layui-hide-radio" lay-ignore value="上海">
+                上海
+            </div>
+            <div class="layui-radio-item layui-this">
+                <input type="radio" tabindex="-1" name="like_city" class="layui-hide-radio" checked lay-ignore value="北京">
+                北京
+            </div>
+            <div class="layui-radio-item ">
+                <input type="radio" tabindex="-1" name="like_city" class="layui-hide-radio"  lay-ignore value="厦门">
+                厦门
+            </div>
+            <div class="layui-radio-item">
+                <input type="radio" tabindex="-1" name="like_city" class="layui-hide-radio" lay-ignore value="广州">
+                广州
+            </div>
+        </div>
+    </section>
+    <section>
+        <input type="checkbox" name="" title="写作" lay-skin="primary" checked>
+        <input type="checkbox" name="" title="发呆" lay-skin="primary">
+        <input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>
+    </section>
+    <section>
+        <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+    </section>
+    <section>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <a class="layui-btn" onclick="mysubmit()">立即提交</a>
+                <a type="reset" class="layui-btn layui-btn-primary">重置</a>
+            </div>
+        </div>
+    </section>
+</form>
+<script>
+    Init('myform', function () {
+        $.myform('setVerify', {password: [/[\S]+/, '必填项不能为空']});
+
+
+
+        $('input[type=checkbox]').on('change', function () {
+            console.log($(this).attr('name'), this.checked)
+        })
+
+        $('input[type=radio]').on('change', function () {
+            console.log($(this).attr('name'), $(this).val())
+        })
+
+        $("#inputGroup").inputGroup({
+            // left:{
+            //     type:'select',
+            //     data:['年','月','日'],
+            //     name:'time'
+            // },
+            // input:{
+            //     type:'url',
+            //     placeholder:'',
+            //     verify:[],
+            //     value:''
+            // },
+            right:{
+                type:'select',
+                url:'../data/select.json',
+                textField:'templateName',
+                valueField:'id',
+                name:'templateId'
+            }
+        });
+
+    });
+
+    function mysubmit() {
+        console.log($("#ff").myform('getValue'))
+    }
+</script>
+</body>
+</html>

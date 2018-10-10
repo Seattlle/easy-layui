@@ -61,7 +61,9 @@ layui.define([],function (exports) {
         '                <div class="layui-form-item">' +
         '                    <label class="layui-form-label">{{=item.title}}</label>' +
         '                    <div class="layui-input-block">' +
-        '                       <div class="layui-upload2" id="{{=item.field}}"></div>' +
+        '                       <div class="layui-upload2" id="{{=item.field}}">' +
+        '                           <input type="hidden" class="{{=item.field}}" name="{{=item.field}}" value="{{=item.value||\'\'}}"/>' +
+        '                   </div>' +
         '                    </div>' +
         '                </div>' +
         '           {{?? item.type == \'password\'}}' +

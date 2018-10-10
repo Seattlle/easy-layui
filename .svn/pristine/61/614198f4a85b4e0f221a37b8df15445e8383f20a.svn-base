@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+    <style>
+        section {
+            width: 500px;
+            margin-bottom: 30px
+        }
+
+        .img {
+            width: 500px;
+        }
+
+
+    </style>
+    <script src="../assets/js/config.js"></script>
+</head>
+<body class="layui-pages">
+
+<section class="upload">
+    <button type="button" class="layui-btn" id="test1" data-options="{auto:false,edit:true,url: 'http://192.168.1.6:8500/user/sys/sysFile/uploadBase64'}">
+        <i class="layui-icon">&#xe67c;</i>上传图片
+    </button>
+    <a href="javascript:;" class="layui-btn" id="upload">确认</a>
+</section>
+
+<section class="upload">
+    <button type="button" class="layui-btn" id="test2">
+        <i class="layui-icon">&#xe67c;</i>上传文件
+    </button>
+    <a href="javascript:;" class="layui-btn" id="upload2">确认</a>
+</section>
+
+<section>
+    <div id="uploads"></div>
+    <div id="uploads2"></div>
+    <a href="javascript:;" class="layui-btn" id="upload1">确认</a>
+</section>
+<script>
+    Init(['uploads', 'jquery'], function () {
+        //执行实例
+        $('#test1').uploads({
+            ratio: 4 / 3 //裁剪长宽比
+            , bindAction: '#upload'
+            , done: function (res) {
+                //上传完毕回调
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+
+        //执行实例
+        $('#test2').uploads({
+            url:'http://192.168.1.6:8500/user/sys/sysFile/upload',
+            bindAction: '#upload2'
+            , done: function (res) {
+                //上传完毕回调
+            }
+            , error: function () {
+                //请求异常回调
+            }
+        });
+
+
+        $('#uploads').uploads({
+            url:'http://192.168.1.6:8500/user/sys/sysFile/upload',
+            type:2,
+            preview:true,
+            auto:false,
+            // multiple:true,
+            bindAction: '#upload1',
+            // images:[{src:'../data/54a3ac29-bde8-4e04-ae8c-209ff12bdb6e.jpg'},{src:'../data/IMG_0600.JPG'}],
+            onDel:function(){
+                console.log('删除');
+            },
+            done: function (res) {
+                //上传完毕回调
+            }
+            ,error: function () {
+                console.log('错误');
+                //请求异常回调
+            }
+        });
+        $('#uploads2').uploads({
+            url:'http://192.168.1.6:8500/user/sys/sysFile/upload',
+            type:2,
+            preview:true,
+            auto:false,
+            bindAction: '#upload1',
+            onDel:function(){
+                console.log('删除');
+            },
+            done: function (res) {
+                //上传完毕回调
+            }
+            ,error: function () {
+                console.log('错误');
+                //请求异常回调
+            }
+        });
+    });
+</script>
+</body>
+</html>

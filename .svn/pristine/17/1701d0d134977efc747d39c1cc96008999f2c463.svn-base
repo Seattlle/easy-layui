@@ -1,0 +1,40 @@
+{
+  "vo": [{
+             "name": "一级菜单1"
+             ,"menuId":"abcdefg1234567"
+             ,"children": [{
+                 "name": "二级菜单1-1"
+                 ,"menuId":"abrdefg1235567"
+             },{
+                 "name": "二级菜单1-2"
+                ,"menuId":"abcd34r1234567"
+             }]
+         },{
+             "name": "一级菜单2（可以点左侧箭头，也可以双击标题）"
+             ,"menuId":"abc45fy1234567"
+             ,"children": [{
+                 "name": "二级菜单2-1"
+                 ,"menuId":"dbc45fyv234t6q"
+                 ,"children": [{
+                     "name": "三级菜单3-1",
+                     "menuId":"a3c45fy1sd4567",
+                     "buttons": [{
+                         "buttonId": "9fabe834-4cc1-42a7-b3a7-9125e6aa9198",
+                         "name": "操作新增ERP"
+                     },{
+                         "buttonId": "9fabe834-4cc1-42a7-b3a7-9125e6aa9198",
+                         "name": "删除"
+                     }]
+                 },{
+                     "name": "三级菜单3-2"
+                      ,"menuId":"abc45cy1234v67"
+                 }]
+             },{
+                 "name": "二级菜单2-2"
+                 ,"menuId":"de345f71d34567"
+             }]
+         }],
+  "code": 200,
+  "msg": "操作成功",
+  "ok": true
+}

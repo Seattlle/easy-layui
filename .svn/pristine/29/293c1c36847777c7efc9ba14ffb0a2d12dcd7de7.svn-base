@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tree</title>
+    <style>
+        body .layui-tree-skin-shihuang .layui-tree-branch{color: #EDCA50;}
+        .layui-tree-inline{display: inline-block}
+        .layui-tree li ul {margin-left: 22px;}
+    </style>
+    <script src="../assets/js/config.js"></script>
+</head>
+<body class="layui-pages">
+    <ul id="demo"></ul>
+    <button id="btn1">获取选中</button>
+    <br><br><br><br><br>
+    <ul id="demo2"></ul>
+    <button id="btn2">获取选中</button>
+<script>
+    Init('myTree', function() {
+        $('#demo').myTree({
+            //节点nodes
+            nodes: [{
+                name: '父节点1'
+                ,menuId:'frop647cd5egf84d7y8'
+                ,children: [{
+                    name: '子节点11',
+                    checked:true,
+                    menuId:'frbet87cdfegf84f7y8'
+                },{
+                    name: '子节点12'
+                    ,menuId:'frbet87t39rgf8347y8'
+                }]
+                ,menuId:'frbet87t39rgf84f7y8'
+                ,checked:true
+                // ,spread:true
+            },{
+                name: '父节点2（可以点左侧箭头，也可以双击标题）'
+                ,menuId:'frbet87t39rgf84cav0'
+                // ,spread:true
+                ,children: [{
+                    name: '子节点21'
+                    // ,spread:true
+                    ,menuId:'frbet8sc39rgf84f7y8'
+                    ,children: [{
+                        name: '子节点211',
+                        menuId:'frbsc87t39rgf84f7y8',
+                        // spread:true,
+                        // checked:true,
+                        buttons: [{
+                            buttonId: '9fabe834-4cc1-42a7-b3a7-9125e6aa9198',
+                            // checked: true,
+                            name: '操作新增ERP'
+                        },{
+                            buttonId: '9fabe834-4cc1-42a7-b3a7-9125e6aa9198',
+                            // checked: true,
+                            name: '删除'
+                        }]
+                    },{
+                        name: '子节点212'
+                        ,menuId:'frbet87dvtrgf84f7y8'
+                    }]
+                    // ,checked:true
+                },{
+                    name: '子节点21'
+                    ,menuId:'frbet87vb9rgf84f7y8'
+                }]
+                // ,checked:true
+            }]
+            ,check:'checkbox'
+            ,click: function(node){
+                console.log(node)    //node即为当前点击的节点数据
+            }
+            ,skin: 'shihuang'
+            ,drag:true
+            ,button:true
+        });
+        $('#btn1').click(function(){
+            console.log($('#demo').myTree('checkStatus'))
+        })
+
+
+
+        $('#demo2').myTree({
+            url: '../data/tree.json'
+            ,check:'checkbox'
+            ,click: function(node){
+                console.log(node)    //node即为当前点击的节点数据
+            }
+            ,skin: 'shihuang'
+            ,drag:true
+            ,button:true
+        });
+        $('#btn2').click(function(){
+            console.log($('#demo2').myTree('checkStatus'))
+        })
+    });
+
+</script>
+</body>
+</html>

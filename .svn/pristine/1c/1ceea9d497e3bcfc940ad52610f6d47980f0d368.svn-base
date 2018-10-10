@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格</title>
+    <style>
+        .layui-table .layui-form-select{
+            position: absolute;
+            top:0;
+            left:0;
+        }
+    </style>
+    <script src="../assets/js/config.js"></script>
+</head>
+<body class="layui-pages">
+    <div id="table1"></div>
+    <button class="layui-btn" onclick='console.log($("#table1").datagrid("getSelected"));'>获取选中</button>
+    <button class="layui-btn" onclick='$("#table1").datagrid({singleSelect:false});'>修改为多选</button>
+    <table id="table2"  data-options="{rownumbers:true,singleSelect:true,url:'../data/datagrid_data2.json',method:'get',checkOnClick:true}">
+        <thead>
+            <tr>
+                <th data-options="{type:'numbers'}" rowspan="2"></th>
+                <th data-options="{type:'checkbox'}" rowspan="2"></th>
+                <th data-options="{field:'itemid',width:80}" rowspan="2">Item ID</th>
+                <th data-options="{field:'productid',width:100,style:'background:#f2f2f2'}" rowspan="2">Product</th>
+                <th colspan="4" align="center">Item Details</th>
+            </tr>
+            <tr>
+                <th data-options="{field:'listprice',width:80,align:'right'}">List Price</th>
+                <th data-options="{field:'unitcost',width:80,align:'right'}">Unit Cost</th>
+                <th data-options="{field:'attr1',width:240}">Attribute</th>
+                <th data-options="{field:'status',width:60,align:'center'}">Status</th>
+            </tr>
+        </thead>
+    </table>
+    <button class="layui-btn" onclick='console.log($("#table2").datagrid("getSelected"));'>获取选中</button>
+    <button class="layui-btn" onclick='$("#table2").datagrid();'>转换表格</button>
+    <table id="table3"   data-options="{url:'../data/datagrid_data3.json',cellMinWidth: 80, page: true}">
+        <thead>
+        <tr>
+            <th data-options="{field:'username', width:80}" rowspan="3">联系人</th>
+            <th data-options="{field:'amount', width:120}" rowspan="3">金额</th>
+            <th data-options="{align:'center'}" colspan="5">地址1</th>
+            <th data-options="{align:'center'}" colspan="2">地址2</th>
+        </tr>
+        <tr>
+            <th data-options="{field:'province'}" rowspan="2">省</th>
+            <th data-options="{field:'city'}" rowspan="2">市</th>
+            <th data-options="{align:'center'}" colspan="3">详细</th>
+            <th data-options="{field:'province'}" rowspan="2">省</th>
+            <th data-options="{field:'city'}" rowspan="2">市</th>
+        </tr>
+        <tr>
+            <th data-options="{field:'street'}" rowspan="2">街道</th>
+            <th data-options="{field:'address'}">小区</th>
+            <th data-options="{field:'house'}">单元</th>
+        </tr>
+        </thead>
+    </table>
+    <button class="layui-btn" onclick='$("#table3").datagrid();'>转换表格</button>
+
+<table id="table13"></table>
+<script id="templ" type="text">
+    {{? it.unitcost>500 }}
+       <div>优秀</div>
+    {{??}}
+       <div>中等</div>
+    {{?}}
+</script>
+<script>
+    Init('datagrid', function () {
+
+        $("#table1").datagrid({
+            url: '../data/datagrid_data1.json',
+            page: true,
+            singleSelect: true,
+            checkOnClick:true,
+            editor:function(value,data,field){
+                console.log(value,data,field)
+            },
+            clickHead: function (col) {
+                console.log(col)
+            },
+            clickRows: function (i, d) {
+                console.log(d)
+            },
+            columns: [[
+                {type: 'numbers',fixed:'left'},
+                {type: 'checkbox',fixed:'left'},
+                {field: 'itemid', title: 'Item ID', width: 80,fixed:'left'},
+                {field: 'status', title: 'status',editor:{type:'select',textField:'title',data:[{"title":"模板一","value":0},{"title":"模板二","value":1},{"title":"模板三","value":2},{"title":"模板四","value":3},{"title":"模板五","value":4}]},formatter:formatSelect},
+                {field: 'listprice', title: 'List Price', editor:'date'},
+                {field: 'unitcost', title: 'Unit Cost',template:'#templ'},
+                {field: 'status', title: 'Status', align: 'center',fixed:'right',compare:{
+                        url:'../data/compare.json',
+                        textField:'name',
+                        valueField:'status',
+                        where:{}
+                }},
+                {field: 'attr1', title: 'Attribute', width: 250,align:'center',sort:true, formatter: formatter1},
+            ]]
+        });
+        
+        function formatSelect(value, row) {
+            var text=value;
+            switch (value){
+                case 0:text='模板一';break;
+                case 1:text='模板二';break;
+                case 2:text='模板三';break;
+                case 3:text='模板四';break;
+                case 4:text='模板五';break;
+            }
+            return text;
+        }
+
+        // $("#table13").datagrid({
+        //     page: true,
+        //     singleSelect: true,
+        //     checkOnClick:true,
+        //     data:[{
+        //         "itemid":"1",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":555,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"2",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":111,
+        //         "attr1":"M",
+        //         "status":1
+        //     },{
+        //         "itemid":"3",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":222,
+        //         "attr1":"L",
+        //         "status":1
+        //     },{
+        //         "itemid":"4",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":333,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"5",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":444,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"6",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":666,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"7",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":777,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"8",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":888,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"9",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":999,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"10",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":555,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"11",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":555,
+        //         "attr1":"S",
+        //         "status":1
+        //     },{
+        //         "itemid":"12",
+        //         "productid":"1111111",
+        //         "listprice":"2018-06-09",
+        //         "unitcost":555,
+        //         "attr1":"S",
+        //         "status":1
+        //     }],
+        //     editor:function(value,data,field){
+        //         console.log(value,data,field)
+        //     },
+        //     clickHead: function (col) {
+        //         console.log(col)
+        //     },
+        //     clickRows: function (i, d) {
+        //         console.log(d)
+        //     },
+        //     columns: [[
+        //         {type: 'numbers',fixed:'left'},
+        //         {type: 'checkbox',fixed:'left'},
+        //         {field: 'itemid', title: 'Item ID', width: 80,fixed:'left'},
+        //         {field: 'productid', title: 'Product ID',editor:{type:'select'}},
+        //         {field: 'listprice', title: 'List Price', editor:'date'},
+        //         {field: 'unitcost', title: 'Unit Cost',editor:'text', sort:true},
+        //         {field: 'attr1', title: 'Attribute', width: 250,align:'center',sort:true, formatter: formatter1},
+        //         {
+        //             field: 'status', title: 'Status', align: 'center',fixed:'right', formatter: function (value, row) {
+        //                 return value === 1 ? "正常" : "不正常";
+        //             }
+        //         }
+        //     ]]
+        // });
+    });
+    function formatter1(v,row) {
+        if(v==='S') return '小码';
+        if(v==='M')return '中码';
+        return '大码';
+    }
+</script>
+</body>
+</html>

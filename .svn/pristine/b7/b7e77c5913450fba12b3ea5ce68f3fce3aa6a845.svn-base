@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "code": 200,
+  "msg": "操作成功",
+  "vo": [
+    {
+      "name": "企业",
+      "value": "evaluationType_company",
+      "child": [
+        {
+          "name": "船舶服务业经营者",
+          "value": "evaluationType_1"
+        },
+        {
+          "name": "港口经营者",
+          "value": "evaluationType_2"
+        }
+      ]
+    },
+    {
+      "name": "员工",
+      "value": "evaluationType_user",
+      "child": [
+        {
+          "name": "水运工程施工单位",
+          "value": "shigong"
+        },
+        {
+          "name": "水运工程监理单位",
+          "value": "jianli"
+        }
+      ]
+    }
+  ]
+}

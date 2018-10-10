@@ -1,0 +1,147 @@
+{
+  "vo": [
+    {
+      "menuId": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "name": "基础控件",
+      "url": "/backstage/system/",
+      "jsAddr": "introduce/menuJs",
+      "pid": "",
+      "sort": 1,
+      "remark": "基础控件",
+      "icon": "fa-github",
+      "buttons": null
+    },
+    {
+      "menuId": "80dc4062-5379-4cac-9c17-3eb1f120c328",
+      "name": "表单",
+      "url": "javascript:;",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 0,
+      "remark": "表单",
+      "icon": "fa-wpforms",
+      "buttons": null
+    },
+    {
+      "menuId": "80dc4062-5379-4cac-9c17-3eb1f120c338",
+      "name": "select",
+      "url": "./pages/select.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "80dc4062-5379-4cac-9c17-3eb1f120c328",
+      "sort": 0,
+      "remark": "select",
+      "icon": "fa-wpforms",
+      "buttons": null
+    },
+    {
+      "menuId": "80dc4062-5379-4cac-cc17-3eb1f120c338",
+      "name": "input",
+      "url": "./pages/form.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "80dc4062-5379-4cac-9c17-3eb1f120c328",
+      "sort": 0,
+      "remark": "input",
+      "icon": "fa-wpforms",
+      "buttons": null
+    },
+    {
+      "menuId": "80dc4062-5379-4cac-9c17-3eb1f120c355",
+      "name": "弹窗",
+      "url": "./pages/dialog.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 0,
+      "remark": "弹窗",
+      "icon": "fa-bars",
+      "buttons": null
+    },
+    {
+      "menuId": "a471559c-a191-4038-bf96-936a4ed370fe",
+      "name": "图册",
+      "url": "./pages/gallery.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 1,
+      "remark": "图册",
+      "icon": "fa-file-image-o",
+      "buttons": null
+    },
+    {
+      "menuId": "a471559c-a191-4038-bf96-936a4ed370fe",
+      "name": "上传图片",
+      "url": "./pages/uploads.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 1,
+      "remark": "上传图片",
+      "icon": "fa-bookmark",
+      "buttons": null
+    },
+    {
+      "menuId": "e9419a96-5d3b-4cef-82c8-20112bee6c4b",
+      "name": "表格",
+      "url": "./pages/table.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 2,
+      "remark": "表格",
+      "icon": "fa-user-secret",
+      "buttons": null
+    },
+    {
+      "menuId": "e9419a96-5d3b-4cef-82c8-20112bee6c43",
+      "name": "表格数据页",
+      "url": "./pages/datagrid.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 2,
+      "remark": "表格",
+      "icon": "fa-user-secret",
+      "buttons": null
+    },
+    {
+      "menuId": "06877157-4854-48e6-9178-14def3229fd9",
+      "name": "Tabs",
+      "url": "./pages/tabs.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 3,
+      "remark": "",
+      "icon": "fa-user",
+      "buttons": null
+    },
+    {
+      "menuId": "2ba73848-cea7-43d1-887e-79f9fe1f2d2d",
+      "name": "模板",
+      "url": "./pages/template.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 4,
+      "remark": "",
+      "icon": "fa-vcard",
+      "buttons": null
+    }, {
+      "menuId": "2ba73848-cea7-43d1-887e-79f9fe1f2d2d",
+      "name": "树形菜单",
+      "url": "./pages/tree.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "d8c53959-f699-464b-a63a-32af35846ff3",
+      "sort": 4,
+      "remark": "",
+      "icon": "fa-vcard",
+      "buttons": null
+    },{
+      "menuId": "d8c53959-f699-464b-a63a-32af35846ff33",
+      "name": "扩展菜单",
+      "url": "./pages/table.html",
+      "jsAddr": "introduce/menuJs",
+      "pid": "",
+      "sort": 1,
+      "remark": "扩展菜单",
+      "icon": "fa-envira",
+      "buttons": null
+    }],
+  "code": 200,
+  "msg": "操作成功",
+  "ok": true
+}
