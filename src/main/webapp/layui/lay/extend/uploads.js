@@ -70,9 +70,7 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
 
                     return img.join('');
                 }()+
-                '    <div class="_upload '+INPUT+'">' +
-                '        <input class="'+ADD+'"  type="file" '+(c.multiple?'multiple':'')+' accept="'+c.accept+'">' +
-                '    </div>' +
+                '<div class="_upload '+INPUT+(c.number>c.images.length?" ":" layui-hide")+'"><input class="'+ADD+'"  type="file" '+(c.multiple?'multiple':'')+' accept="'+c.accept+'"></div>'+
                 '</div>');
 
             $this.append(_upload);
@@ -166,7 +164,9 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
                         input_file.removeClass('layui-hide');
                     }
 
-                    cc.Files[name]=null;
+                    if(cc.Files && cc.Files[name]){
+                        cc.Files[name]=null;
+                    }
                     cc.onDel && c.onDel(pic);
 
                     $this.data('options',cc);

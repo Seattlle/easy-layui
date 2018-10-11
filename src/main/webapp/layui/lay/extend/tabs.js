@@ -296,7 +296,7 @@ layui.define(['jquery','util'], function (exports) {
 
                 if(exist===-1){
                     //标题
-                    var _li=$('<li class="'+(c.contextmenu?TAB_MENU:"")+(isClose?' close':'')+'" data-menuId="'+(options.extra===undefined ? '':options.extra.menuId===undefined? '':options.extra.menuId)+'">'+(function () {
+                    var _li=$('<li class="'+(c.contextmenu?TAB_MENU:"")+(isClose?' close':'')+'" data-menuId="'+(options.extra===undefined ? '':options.extra.menuId===undefined? '':options.extra.menuId)+'" data-title="'+options.title+'">'+(function () {
                         var title=options.title;
                         if(options.showIcon && options.icon){
                             title='<i class="layui-icon">'+options.icon+'</i>'+title;
@@ -337,7 +337,7 @@ layui.define(['jquery','util'], function (exports) {
 
             t=t.split('<i')[0];
             title.find('li').each(function (i,v) {
-                var _title=v.innerHTML.split('<i')[0];
+                var _title=$(v).data('title');
                 if(_title ===t){
                     index=i;
                 }
