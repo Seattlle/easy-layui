@@ -234,7 +234,16 @@ layui.define(['jquery','defaultConfig','dialog'], function(exports){
             },
             //完成请求后触发。即在success或error触发后触发
             complete: function (XMLHttpRequest, status) {
-               $.close($('body').data('load_index'));
+                var dialogIndex=$('body').data('load_index');
+                if(dialogIndex){
+                    if($('#layui-layer'+dialogIndex).length>0){
+                        $.close(dialogIndex);
+                    }else{
+                        setTimeout(function () {
+                            $.close(dialogIndex);
+                        },300)
+                    }
+                }
             },
             //发送请求前触发
             beforeSend: function (XMLHttpRequest) {

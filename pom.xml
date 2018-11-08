@@ -34,7 +34,6 @@
 
   <build>
     <finalName>easy-layui</finalName>
-
       <plugins>
           <!-- 配置Tomcat插件 -->
           <plugin>

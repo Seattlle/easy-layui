@@ -76,14 +76,17 @@
 
         $('select').on('change', function () {
             console.log($(this).attr('name'), $(this).val())
-        })
+        });
 
         $('#urlSelect1').select({
             url:'../data/select.json',
             textField:'templateName',
             valueField:'id',
             extra:'#btn',
-            value:'57d8abd1-c679-4128-b335-2c75147ff4a2'
+            value:'57d8abd1-c679-4128-b335-2c75147ff4a2',
+            del:function (value) {
+                console.log(value);
+            }
         });
 
         // $("#urlSelect2").select({
@@ -105,9 +108,9 @@
             showAllLevels:false, //结果显示所有层级
             changeOnSelect:true,//选中即改变
             // activeItemChange:true, //选中加载子项（需与url、keyValue同时设置）
-            // selected:['jianli']
+            selected:['jianli']
         });
-        $("#cascader").cascader('setValue',['jianli']);
+        // $("#cascader").cascader('setValue',['evaluationType_user']);
         //
         $("#cascader1").cascader({
             data:[{
@@ -170,6 +173,7 @@
                 valueField:'name',
                 childName:'city'
             },
+            readonly:true,
             selected:['天津市','天津市','蓟  县']
         });
     });

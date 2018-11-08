@@ -13,7 +13,7 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
         type:1,
         accept:'image/jpeg,image/png',
         images:[]
-    }
+    };
 
 
     var methods={
@@ -76,6 +76,13 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
             $this.append(_upload);
             if(c.preview){
                 $this.addClass('preview_wrap');
+
+                layui.gallery({
+                    popup:{
+                        title:'图片预览',
+                        shade:0.6
+                    }
+                });
             }
             methods.initEvent.call(this);
         },
@@ -125,7 +132,7 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
                                 '    </span>' +
                                 '</div></div>';
                             input_file.before(pic);
-                        }
+                        };
                         if((imgCount+index+1)===cc.number){
                             input_file.addClass('layui-hide');
                             return false;
@@ -133,16 +140,6 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
                     });
                     that.data('options',cc);
                 }
-
-                if(cc.preview){
-                    layui.gallery({
-                        popup:{
-                            title:'图片预览',
-                            shade:0.6
-                        }
-                    });
-                }
-
                 if(cc.auto){
                     methods.upload.call(_this);
                 }
@@ -177,8 +174,7 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
             });
 
             if(c.bindAction){
-                // $('body').off(eventName)
-                $('body').on('click'+eventName,c.bindAction,function () {
+                $('body').off(eventName).on('click'+eventName,c.bindAction,function () {
                     methods.upload.call(_this);
                 });
             }
@@ -237,6 +233,6 @@ layui.define(['jquery','upload','dialog','gallery'], function (exports) {
             return this;
         }
         return method.apply(this, arguments);
-    }
+    };
     exports('uploads');
 });

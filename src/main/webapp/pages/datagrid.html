@@ -27,8 +27,8 @@
                 title: '选项',
                 placeholder: '请输入选项',
                 name: 'template1',
-                type:'select',
-                options:"{data:[{templateName:'选项1',id:'1001'},{templateName:'选项2',id:'1002'}],textField:'templateName',valueField:'id',value:'1001'}"
+                type:'cascader',
+                options:"{url:'../data/cascader.json',keyValue:[{nameField: 'name',valueField: 'value',childName: 'child'}],showAllLevels:false, changeOnSelect:true}"
             },{
                 title: '生产日期',
                 placeholder: '请选择日期',

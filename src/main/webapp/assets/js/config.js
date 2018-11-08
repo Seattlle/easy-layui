@@ -69,7 +69,7 @@ var Init=function(rely,fn) {
     loadScript(authorityPath+'/layui/layui.js','layui',function () {
         rely=rely ||[];
         layui.config({
-            version:true
+            version:false
         });
         layui.use(rely,function() {
             fn && fn();

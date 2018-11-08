@@ -33,7 +33,7 @@ layui.define(['jquery','util'], function (exports) {
                     opt = $.extend({},c, options);
                     opt.selected = 0;
                     $.data(_this, "tabs", opt);
-                    return ;
+
                 }else{
                     var _option = $(_this).data('options');
                     if(typeof _option==="string"){
@@ -294,7 +294,10 @@ layui.define(['jquery','util'], function (exports) {
                     exist=methods.exist.call(_this,options.title),
                     isClose=options.closed||c.closed;
 
-                if(exist===-1){
+                if(exist===-1 || options.force){
+                    if(exist>=0){
+                        methods.del.call(_this,exist);
+                    }
                     //标题
                     var _li=$('<li class="'+(c.contextmenu?TAB_MENU:"")+(isClose?' close':'')+'" data-menuId="'+(options.extra===undefined ? '':options.extra.menuId===undefined? '':options.extra.menuId)+'" data-title="'+options.title+'">'+(function () {
                         var title=options.title;
@@ -326,7 +329,6 @@ layui.define(['jquery','util'], function (exports) {
                 }else{
                     methods.select.call(this,exist);
                 }
-                // options.done && options.done();
                 c.done && c.done();
             });
         },
@@ -359,7 +361,7 @@ layui.define(['jquery','util'], function (exports) {
             return this;
         }
         return method.apply(this, arguments);
-    }
+    };
 
     $(document).find('.'+ELEM_TABS).each(function (i,v) {
         $(v).tabs()

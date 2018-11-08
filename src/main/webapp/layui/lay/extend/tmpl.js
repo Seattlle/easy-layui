@@ -5,7 +5,7 @@ layui.define([],function (exports) {
         search: '<form class="layui-form _condition" action="">' +
         '<!-- 条件1 -->' +
         '<div class="layui-form-item">' +
-        '       {{~it:item:i }}' +
+        '{{~it:item:i }}' +
         '{{?  item.type!=\'hidden\' && item.title.length>0 }}' +
         '   {{? item.title.length<3 }}' +
         '<label class="layui-form-label mini">{{=item.title}}</label>' +
@@ -13,20 +13,22 @@ layui.define([],function (exports) {
         '<label class="layui-form-label">{{=item.title}}</label>' +
         '{{?}}' +
         '{{?}}' +
-        '        <div class="layui-input-inline _search">' +
+        '     <div class="layui-input-inline _search">' +
         '        {{? item.type==\'date\' }}' +
         '           <input type="text" class="layui-input layui-date" autocomplete="off" name="{{=item.name}}" placeholder="{{=item.placeholder||\'\'}}">' +
         '           <i class="layui-icon">&#xe637;</i>' +
         '        {{?? item.type==\'select\' }}' +
-        '        <select name="{{=item.name}}" lay-search {{? item.templet }} lay-templet="{{=item.templet }}" {{? }} data-options="{{=item.options}}"></select>' +
+        '           <select name="{{=item.name}}" lay-search {{? item.templet }} lay-templet="{{=item.templet }}" {{? }} data-options="{{=item.options}}"></select>' +
+        '        {{?? item.type==\'cascader\'}}' +
+        '           <input type="text" name="{{=item.name}}"  class="layui-cascader" data-options="{{=item.options}}">' +
         '        {{?? item.type==\'hidden\'}}' +
-        '<input type="hidden" name="{{=item.name}}" value="{{=item.value}}">' +
-        '{{??}}' +
-        '<input type="text" class="layui-input" autocomplete="off"' +
-        '   name="{{=item.name}}" placeholder="{{=item.placeholder||\'\'}}">' +
-        '{{? }}' +
-        '        </div>' +
-        '        {{~ }}' +
+        '           <input type="hidden" name="{{=item.name}}" value="{{=item.value}}">' +
+        '        {{??}}' +
+        '           <input type="text" class="layui-input" autocomplete="off"' +
+        '           name="{{=item.name}}" placeholder="{{=item.placeholder||\'\'}}">' +
+        '        {{? }}' +
+        '     </div>' +
+        '{{~ }}' +
         '        <button class="layui-btn" lay-submit lay-filter="search">搜索</button>' +
         '        <button type="reset" class="layui-btn layui-btn-default">重置</button>' +
         '</div>' +

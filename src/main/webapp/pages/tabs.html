@@ -46,11 +46,19 @@
                     url:'table.html',
                     closed:true
                 });
-            })
+            });
             $('.exist').on('click',function () {
                console.log( $("#tt").tabs('exist','订单管理'))
             })
         });
+
+        window.onbeforeunload = function(event){
+            console.log('page before unload');
+            event.returnValue="关闭页面不会保存数据";
+        };
+        window.onunload = function(){
+            console.log('page leave')
+        };
     </script>
 </body>
 </html>

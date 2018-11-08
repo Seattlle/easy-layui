@@ -72,6 +72,12 @@ layui.define(['jquery','datagrid','util','tmpl','myform','laydate','doT'], funct
                         obj[v.name]=options.value;
                     }
                     $('select[name='+v.name+']',searchs).select();
+                }else if(v.type==='cascader'){
+                    var options=util.getOptions(v.options);
+                    if(options.value){
+                        obj[v.name]=options.value;
+                    }
+                    $('input[name='+v.name+']',searchs).cascader();
                 }
             });
 

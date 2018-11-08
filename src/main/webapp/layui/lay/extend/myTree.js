@@ -16,11 +16,14 @@ layui.define(['jquery','util'], function(exports){
 
     var MyTree = function (options) {
 
-    }
+    };
 
     MyTree.prototype.init = function (options) {
         var that = this;
         var config = options[0];
+
+        config=$.extend(true,{idName:'menuId',pidName:'pid',children:'children'},config);
+
 
         that.addClass('layui-box layui-tree'); //添加tree样式
         if(config.skin){
@@ -32,7 +35,7 @@ layui.define(['jquery','util'], function(exports){
                 data:config.where ||{},
                 doFun: function(res) {
                     $.extend(true, config, {
-                        nodes: util.transData( res['vo'],'menuId', 'pid', 'children')
+                        nodes: util.transData( res['vo'], config['idName'], config['pidName'],  config['children'])
                     });
 
                     MyTree.prototype.config = config;
@@ -45,7 +48,7 @@ layui.define(['jquery','util'], function(exports){
         }
 
 
-    }
+    };
 
     MyTree.prototype.tree = function (elem,children) {
         var that = this, options = that.config;
@@ -65,7 +68,7 @@ layui.define(['jquery','util'], function(exports){
                 //复选框/单选框
                 ,function(){
                     return options.check ? (
-                        '<i class="layui-icon layui-tree-check '+ (item.checked?'checked':'') +'" data-menuId="'+ item.menuId +'">'+ (
+                        '<i class="layui-icon layui-tree-check '+ (item.checked?'checked':'') +'" data-menuId="'+ item[options.idName] +'">'+ (
                             options.check === 'checkbox' ? (item.checked?icon.checkbox[1]:icon.checkbox[0]) : (
                                 options.check === 'radio' ? (item.checked?icon.radio[1]:icon.radio[0]) : ''
                             )
@@ -96,7 +99,7 @@ layui.define(['jquery','util'], function(exports){
                                     '<cite>' + v.name + '</cite>',
                                     '</li>'
                                 ].join('')
-                        })
+                        });
                         html + '</ul>';
                         return html
                     }
@@ -123,7 +126,7 @@ layui.define(['jquery','util'], function(exports){
             options.drag && MyTree.prototype.drag(li, item);
         });
         MyTree.prototype.on(elem);
-    }
+    };
 
     //通用事件
     MyTree.prototype.on = function(elem){
@@ -198,7 +201,7 @@ layui.define(['jquery','util'], function(exports){
         //执行伸展
         var open = function(){
             if(elem.data('spread')){          //当前为伸展状态
-                elem.data('spread', null)
+                elem.data('spread', null);
                 ul.removeClass('layui-show');
                 arrow.html(icon.arrow[0]);
                 a.find('.layui-icon').html(icon.branch[0]);
@@ -215,7 +218,7 @@ layui.define(['jquery','util'], function(exports){
 
         arrow.on('click', open);
         a.on('dblclick', open);
-    }
+    };
 
     //拖拽节点
     MyTree.prototype.move = {};
@@ -233,7 +236,7 @@ layui.define(['jquery','util'], function(exports){
             }
         };
         a.on('mousedown', function(){
-            var move = MyTree.prototype.move
+            var move = MyTree.prototype.move;
             move.from = {
                 item: item,
                 elem: elem
@@ -265,7 +268,7 @@ layui.define(['jquery','util'], function(exports){
             menuIds: menuIds.join(';'),
             buttonIds: buttonIds.join(';')
         }
-    }
+    };
 
     $.fn.myTree = function (options) {
         var contype  =  options;
@@ -279,8 +282,8 @@ layui.define(['jquery','util'], function(exports){
             $.error('参数不能为空');
             return this;
         }
-    }
+    };
 
     //暴露接口
     exports('myTree');
-})
+});

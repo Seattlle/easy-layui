@@ -67,7 +67,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         ,data=rem.data('data');
 
                                         if(!list ||list.length===0){
-                                            var list=$(['<div class="layui-select-list layui-form-select"><dl class="'+ (select.find('optgroup')[0] ? ' layui-select-group' : '') +'">' +
+                                            list=$(['<div class="layui-select-list layui-form-select"><dl class="'+ (select.find('optgroup')[0] ? ' layui-select-group' : '') +'">' +
                                             function () {
                                                 var dd=[];
 
@@ -79,7 +79,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                                     if(data[i].group){
                                                         dd.push('<dt>'+ data[i].text +'</dt>');
                                                     }else{
-                                                        dd.push('<dd lay-value="'+ data[i].value +'" class="'+ (data[i].selected ?  THIS : '') + (data[i].disabled ? (' '+DISABLED) : '') +'">'+ data[i].text +'</dd>');
+                                                        dd.push('<dd lay-value="'+ data[i].value +'" class="'+ (data[i].selected ?  THIS : '') + (data[i].disabled ? (' '+DISABLED) : '') +'" data-text="'+data[i].text+'">'+ data[i].text+(params.del?'<i  class="layui-icon delItem">&#x1006;</i>':'') +'</dd>');
                                                     }
                                                 }
                                                 return dd.join('');
@@ -114,6 +114,8 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         select=dl.find('.'+THIS);
 
                                         selectOptions.call(elem,select,input);
+
+                                        flag=flag ? flag:list.data('delItem');
 
                                         if(!flag){
                                             list.addClass(HIDE);
@@ -168,7 +170,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                             select.each(function (index,item) {
                                                 var _this=$(this);
                                                 value.push(_this.attr('lay-value'));
-                                                label.push(_this.html());
+                                                label.push(_this.data('text'));
                                             });
                                             var labelText=label.join(',')||"";
                                             if(input.val()!==labelText){
@@ -184,7 +186,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                                 $this.val(value).trigger('change');
                                             }
                                         }else{
-                                            var text=select.html()||"";
+                                            var text=select.data('text')||"";
                                             if(input.val()!==text){
                                                 input.val(text);
                                                 $this.val(select.attr('lay-value')).trigger('change');
@@ -198,27 +200,6 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                     input.focus();
                                 });
 
-                                //键盘事件
-                                input.on('keyup', function(e){
-                                    var rem=$(this).parents('.'+CLASS);
-                                    var keyCode = e.keyCode;
-                                    if(keyCode=== 40){
-                                        choseList.call(rem,1);
-                                    }else if(keyCode=== 38){
-                                        choseList.call(rem,-1);
-                                    }else if(keyCode=== 13){
-                                        hideDown.call(rem);
-                                    }
-                                }).on('blur', function(e){
-                                    var rem=$(this).parents('.'+CLASS);
-                                    if(rem.data('list')){
-                                        var timmer=setTimeout(function () {
-                                            hideDown.call(rem);
-                                        },200);
-
-                                        rem.data('timmer',timmer);
-                                    }
-                                });
                                 //点击标题区域
                                 title.on('click', function(){
                                     if(typeof $(this).attr('readonly')==='string'){
@@ -306,9 +287,56 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         }
                                     }
                                 });
+                                //删除
+                                body.off('click.delItem').on('click.delItem','.layui-select-list dd .delItem',function (e) {
+                                    e.stopPropagation();
+
+                                    var othis = $(this)
+                                        ,dd=othis.parent()
+                                        ,list=othis.parents('.layui-select-list')
+                                        ,rem=list.data('parent')
+                                        ,params=rem.data('params');
+
+                                    var obj={
+                                        elem:list.data('elem')[0],
+                                        list:list[0],
+                                        text:dd.data('text'),
+                                        value:dd.attr('lay-value')
+                                    };
+                                    params.del && params.del(obj);
+
+                                    list.data('delItem',true);
+                                    setTimeout(function () {
+                                        list.data('delItem',false);
+                                    },300);
+
+                                    return false;
+                                });
 
                                 reElem.find('dl>dt').on('click', function(){
                                     return false;
+                                });
+
+                                //键盘事件
+                                input.on('keyup', function(e){
+                                    var rem=$(this).parents('.'+CLASS);
+                                    var keyCode = e.keyCode;
+                                    if(keyCode=== 40){
+                                        choseList.call(rem,1);
+                                    }else if(keyCode=== 38){
+                                        choseList.call(rem,-1);
+                                    }else if(keyCode=== 13){
+                                        hideDown.call(rem);
+                                    }
+                                }).on('blur', function(e){
+                                    var rem=$(this).parents('.'+CLASS);
+                                    if(rem.data('list')){
+                                        var timmer=setTimeout(function () {
+                                            hideDown.call(rem);
+                                        },200);
+
+                                        rem.data('timmer',timmer);
+                                    }
                                 });
 
                                 if(_params && _params.show){
@@ -356,6 +384,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                             ) : TIPS;
 
                             var initDD=function(options,callback){
+                                var _this=this;
                                 var _value=params.valueField || 'value',
                                     _title=params.textField || 'name';
                                 var arr = [],labelText=[],option=[];
@@ -366,7 +395,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
 
                                 if(params.extra){
-                                    reElem.data('extra',params.extra)
+                                    _this.data('extra',params.extra)
                                 }
 
                                 if(params.data && params.data.length>0){
@@ -382,7 +411,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                     }
                                     var _text=labelText.length>0? multiple?labelText.join(','):labelText[0]:'';
 
-                                    reElem.data('data',arr).find('.layui-select-label').val(_text);
+                                    _this.data('data',arr).find('.layui-select-label').val(_text);
 
                                     option.length>0 && othis.html(option.join(''));
                                     callback && callback();
@@ -411,10 +440,9 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                                     arr.push({text:item[_title],value:item[_value],selected:_selected,disabled:item.disabled});
                                                 });
                                                 var _text=labelText.length>0? multiple?labelText.join(','):labelText[0]:'';
-                                                reElem.data('data',arr).find('.layui-select-label').val(_text);
+                                                _this.data('data',arr).find('.layui-select-label').val(_text);
                                                 option.length>0 && othis.html(option.join(''));
                                                 othis.data('data',res[util.webConfig.resName]);
-
                                                 callback && callback();
                                             }
                                         }
@@ -435,12 +463,11 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
                                     var _text=labelText.length>0? multiple?labelText.join(','):labelText[0]:'';
 
-                                    reElem.data('data',arr).find('.layui-select-label').val(_text);
+                                    _this.data('data',arr).find('.layui-select-label').val(_text);
 
-                                    //option.length>0 && othis.html(option.join(''));
                                     callback && callback();
                                 }
-                            }
+                            };
 
                             //替代元素
                             var reElem = $(['<div class="'+ (isSearch ? '' : 'layui-unselect ') + CLASS + (disabled ? ' layui-select-disabled' : '')+(params.show?' layui-form-selected':'') +'">'
@@ -455,10 +482,16 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                 ,'<i class="layui-edge"></i></div>'
                                 ,'</div>'].join(''));
 
-                            othis.next('.'+CLASS).remove();
+                            var old_rem=othis.data('virtualSelect');
+                            if(old_rem){
+                                var _list=old_rem.data('list');
+                                if(_list) _list.remove();
+                                old_rem.remove();
+                            }
+                            othis.data('virtualSelect',reElem);
                             othis.after(reElem);
                             reElem.data('params',params);
-                            initDD(othis.find('*'),function () {
+                            initDD.call(reElem,othis.find('*'),function () {
                                 params.done && params.done();
                                 events.call(othis, reElem, disabled, isSearch);
                              });
@@ -481,33 +514,29 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
                                         var initInput=function(){
                                             if(!_params.showAllLevels && _selected.length>0){
-                                                var name='name',value='value',childName='child';
+                                                var keyValue=isArrayFn(_params.keyValue)?_params.keyValue.length>leavel?_params.keyValue[leavel]:_params.keyValue[0]:_params.keyValue;
+                                                var name=keyValue.nameField || 'name',value=keyValue.valueField || 'value',childName=keyValue.childName || 'child';
 
                                                 var searchData=function (arr,v) {
                                                     for(var i=0;i<arr.length;i++){
-                                                        if(arr[i][childName]){
+                                                        if(arr[i][value]===v){
+                                                            return [i];
+                                                        }else if(arr[i][childName]){
                                                             var result=searchData(arr[i][childName],v);
                                                             if(result){
                                                                 return [i].concat(result);
-                                                            }
-                                                        }else{
-                                                            if(arr[i][value]===v){
-                                                                return [i];
                                                             }
                                                         }
                                                     }
                                                     return null;
                                                 };
-                                                var ss=searchData(data,_selected[0]);
+                                                var ss=_selected[0]?searchData(_params.data,_selected[0]):null;
                                                 if(ss){
-                                                    var _list=$this.find('.'+ulClass);
-                                                    for(var i=0;i<ss.length;i++){
-                                                        _list.eq(i).find('li').eq(ss[i]).click();
-                                                        _list=$this.find('.'+ulClass);
-                                                    }
+                                                    var _list=$this.find('.'+ulClass).eq(leavel).find('li');
+                                                    _list.eq(ss[leavel]).addClass('initInput').click();
                                                 }
                                             }
-                                        }
+                                        };
                                         if(!list || list.length<=leavel){
                                             list=$('<ul class="'+ulClass+'" data-leavel="'+leavel+'">'+li+'</ul>');
                                             list.data('data',data);
@@ -523,9 +552,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                                     if(diss>parentHeight){
                                                         parent.scrollTop(diss-parentHeight/3);
                                                     }
-                                                    // if(that.hasClass(hasChildClass)){
-                                                    that.click();
-                                                    // }
+                                                    that.addClass('simulation_click').click();
                                                 });
                                             initInput();
                                         }else{
@@ -533,6 +560,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                                 var _ul=$(item);
                                                 if(index===leavel) {
                                                     _ul.data('data', data).html(li);
+                                                    _ul.find('.'+THIS).addClass('simulation_click').click();
                                                 }else if(index>leavel){
                                                     _ul.remove();
                                                 }
@@ -546,24 +574,12 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                     }
                                     ,getArrayList= function (arr,leavel,params) {
                                         var li=[]
-                                            ,name='name'
-                                            ,value='value'
-                                            ,childName='children'
                                             ,_selected=params.selected
-                                            ,selected=params.showAllLevels!==false ? _selected[leavel]:_selected && _selected.length>0?_selected[0]:null;
+                                            ,selected=params.showAllLevels!==false ? _selected?_selected[leavel]:null:_selected && _selected.length>0?_selected[0]:null;
 
-                                        if(params.keyValue){
-                                            if(isArrayFn(params.keyValue)){
-                                                var _setKeyValue=params.keyValue[leavel]||{};
-                                                name=_setKeyValue['nameField'] ? _setKeyValue['nameField']:name;
-                                                value=_setKeyValue['valueField'] ? _setKeyValue['valueField']:value;
-                                                childName=_setKeyValue['childName'] ? _setKeyValue['childName']:childName;
-                                            }else{
-                                                name=params.keyValue['nameField']||name;
-                                                value=params.keyValue['valueField']||value;
-                                                childName=params.keyValue['childName']||childName;
-                                            }
-                                        }
+                                        var keyValue=isArrayFn(params.keyValue)?params.keyValue.length>leavel?params.keyValue[leavel]:params.keyValue[0]:params.keyValue;
+                                        var name=keyValue.nameField || 'name',value=keyValue.valueField || 'value',childName=keyValue.childName || 'child';
+
                                         for(var i=0;i<arr.length;i++){
                                             var _value=typeof arr[i]==="string"?arr[i]:arr[i][value]
                                                 ,_name=typeof arr[i]==="string"?arr[i]:arr[i][name];
@@ -610,6 +626,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         that.css({left:pos.left+'px',top:pos.top+pos.height+5+'px'});
                                     };
 
+
                                 elem.off(spaceName);
                                 elem.on('redraw'+spaceName,'.'+title,function (e) {
                                     var othis=$(this)
@@ -618,7 +635,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
                                     var _menu= $('#'+ulWrap+index);
 
-                                    if(_menu.length>0){
+                                    if(_menu.length>0 && params.data){
                                         renderList.call(_menu,params.data,0,true);
                                     }else{
                                         othis.click();
@@ -629,6 +646,8 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                     var othis=$(this)
                                         ,index=othis.data('index')
                                         ,params=othis.data('params');
+
+                                    if(params.readonly && !othis.hasClass('init')) return ;
 
                                     $('.'+ulWrap).each(function (i,item) {
                                        var that=$(this);
@@ -662,10 +681,14 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         var _menu= $('#'+ulWrap+index);
                                         if(_menu.hasClass(HIDE)){
                                             _menu.removeClass(HIDE);
+
+                                            resize.call(_menu[0]);
                                         }else{
                                             _menu.addClass(HIDE);
                                         }
                                     }
+
+                                    othis.removeClass('init');
                                 });
 
                                 body.off(spaceName);
@@ -676,6 +699,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         _value=othis.data('value'),
                                         selectMenu=othis.parents('.'+ulWrap),
                                         _title=selectMenu.data('title'),
+                                        _elem=_title.data('elem'),
                                         thisUl=othis.parent(),
                                         leavel=thisUl.data('leavel'),
                                         data=thisUl.data('data'),
@@ -687,7 +711,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
                                     if(_params.keyValue){
                                         if(isArrayFn(_params.keyValue)){
-                                            var _setKeyValue=_params.keyValue[leavel]||{};
+                                            var _setKeyValue=_params.keyValue.length>leavel?_params.keyValue[leavel]:_params.keyValue[0]||{};
                                             name=_setKeyValue['nameField'] ? _setKeyValue['nameField']:name;
                                             value=_setKeyValue['valueField'] ? _setKeyValue['valueField']:value;
                                             childName=_setKeyValue['childName'] ? _setKeyValue['childName']:childName;
@@ -727,16 +751,25 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         thisUl.find('.'+THIS).removeClass(THIS);
                                         othis.addClass(THIS);
 
+                                        var __value=_value+"";
                                         for(var i in data){
-                                            if(data[i][value]===_value){
+                                            if((data[i][value]+"")===__value){
                                                 child=data[i][childName];
                                                 break;
                                             }
                                         }
+                                        if(_params.changeOnSelect){
+                                            _title.find('input').val(othis.text());
+                                            _elem.val(othis.data('value'));
+                                            if(!othis.hasClass('initInput')){
+                                                _params.selected=[othis.data('value')];
+                                                _title.data('params',_params);
+                                            }else{
+                                                othis.removeClass('initInput');
+                                            }
+                                        }
                                         renderList.call(selectMenu,child,parseInt(leavel)+1);
                                     }
-
-
                                 });
                                 //点击叶子节点
                                 body.on('click'+spaceName,'.'+leaf,function () {
@@ -763,31 +796,40 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                             text.push(othis.text());
                                         }
 
-                                        var resultValue=value.join(_params.split===undefined? '-':_params.split),
-                                            showValue=text.join(_params.split===undefined? '-':_params.split);
+                                        var _split=_params.split===undefined? '-':_params.split;
+
+                                        var resultValue=value.join(_split),
+                                            showValue=text.join(_split);
+
+                                        _params.selected=value;
+                                        _title.data('params',_params);
 
                                         _title.find('input').val(showValue);
                                         _elem.val(resultValue);
 
                                         if(!othis.hasClass(hasChildClass)){
-                                            selectMenu.addClass(HIDE);
+                                            if(!othis.hasClass('simulation_click')){
+                                                selectMenu.addClass(HIDE);
+                                            }else{
+                                                othis.removeClass('simulation_click');
+                                            }
                                             _params.onChange && _params.onChange(showValue);
                                         }
                                     }
                                     return false;
                                 });
 
-
                                 var hide=function(e){
                                     if(!$(e.target).parent().hasClass(ulWrap)){
                                         $('.'+ulWrap).addClass(HIDE);
                                     }
-                                }
+                                };
                                 //关闭下拉
-                                $(document).off('click', hide).on('click', hide);
+                                $(document).off('.off_click').on('click.off_click', hide);
 
                                 if(!params.showAllLevels && params.selected){
-                                    elem.find('.'+title).trigger('click');
+                                    elem.find('.'+title).addClass('init').trigger('click');
+                                    $(document).trigger('click.off_click');
                                 }
                             };
                         
@@ -795,7 +837,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                             var _this=$(this)
                                 ,hasRender = _this.next('.' + renderClass)
                                 ,params=util.getOptions(_this.data('options'))||{}
-                                ,readonly=typeof _this.attr('readonly')==="string" || params.readonly
+                                ,readonly=typeof _this.attr('readonly')==="string" || params.readonly;
 
                             params=$.extend({},options,params);
 
@@ -842,7 +884,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
                                 check.trigger('change');
                             });
-                        }
+                        };
 
                         return checks.each(function(index, check){
                             var othis = $(this), skin = othis.attr('lay-skin')
@@ -945,7 +987,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
 
 
                         var events=function(innder){
-                            var _this = $(this).find('.'+SELECT_SINGLE)
+                            var _this = $(this).find('.'+SELECT_SINGLE);
 
 
                             _this.each(function (index,item) {
@@ -971,10 +1013,10 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                 if(_list.find('.'+SELECTED).length===0){
                                     _item && _item.eq(0).click();
                                 }
-                            })
+                            });
                             var hide=function(){
                                 _this.removeClass(OPEN);
-                            }
+                            };
 
                             $(document).off('click', hide).on('click', hide);
 
@@ -1030,7 +1072,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                 }
 
                                 return prepend;
-                            }
+                            };
                             var getUrlData=function (inner,obj) {
                                 var text=obj.textField || 'name',
                                     value=obj.valueField ||'value';
@@ -1047,7 +1089,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                         }
                                     });
                                 }
-                            }
+                            };
 
                             if(options.left || options.right){
                                 var _input=options.input ||{};
@@ -1085,7 +1127,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                 }
                                 m = Math.pow(10, Math.max(r1, r2));
                                 return (arg1 * m + arg2 * m) / m;
-                            }
+                            };
 
                         _numberGroup.each(function (index,item) {
                             var $this=$(this)
@@ -1165,9 +1207,26 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                     }
                     render.data('data',data).find('.layui-select-label').val(showText.join(','));
                     othis.val(val).trigger('change');
-                }
+                };
                 setData();
             })
+        },
+        selectReload:function(){
+            var  nodeName=this.length>0?this[0].nodeName.toLowerCase():this.nodeName.toLowerCase()
+                ,_select= nodeName==='select'? this: this.find('select');
+
+            return _select.each(function (index,item) {
+                var othis = $(item)
+                    , render = othis.next('.' + CLASS)
+                    , list = render.data('list')
+                    , params=render.data('params');
+
+                list && list.remove();
+                render && render.remove();
+
+
+                methods.render.call(othis,'select',params);
+            });
         },
         cascaderSetValue:function(val){
             var CLASS='layui-cascader',renderClass='layui-cascader-render',titleClass='layui-select-title';
@@ -1219,7 +1278,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
                                 }
                             }
                         }else if($this.attr('type')==="radio" && !$this.prop('checked')){
-                            return ;
+
                         }else{
                             if(typeof $this.attr('md5')==="string"){
                                 _val=Md5.hex_md5(_val);
@@ -1343,7 +1402,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
             arr=[arr];
         }
         for(var i=0;i<arr.length;i++){
-            if(value===arr[i]){
+            if(value==arr[i]){
                 return true;
             }
         }
@@ -1363,13 +1422,16 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
             return this;
         }
         return method.apply(this, arguments);
-    }
+    };
 
 
     $.fn.select  =  function (options) {
         var options=options||{};
         var method  =  arguments[0];
-        method=method==="setValue"?"selectSetValue":method;
+        switch (method){
+            case 'setValue':method='selectSetValue';break;
+            case 'reload':method='selectReload';break;
+        }
         if (methods[method]) {
             method  =  methods[method];
             arguments  =  Array.prototype.slice.call(arguments, 1);
@@ -1381,7 +1443,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
             return this;
         }
         return method.apply(this,arguments);
-    }
+    };
 
     $.fn.cascader  =  function (options) {
         var method  =  arguments[0];
@@ -1403,7 +1465,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
             return this;
         }
         return method.apply(this,arguments);
-    }
+    };
 
     $.fn.inputGroup  =  function (options) {
         var method  =  arguments[0];
@@ -1418,7 +1480,7 @@ layui.define(['jquery','util','dialog','md5','doT'], function (exports) {
             return this;
         }
         return method.apply(this,arguments);
-    }
+    };
 
     dom.myform();
 

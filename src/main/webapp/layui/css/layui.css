@@ -453,6 +453,8 @@ hr, .layui-timeline-item:before{background-color: #e6e6e6;}
 .layui-form-select dl dt{font-size: 12px; color: #999;}
 .layui-form-select dl dd{cursor: pointer;}
 .layui-form-select dl dd:hover{background-color: #f2f2f2;}
+.layui-form-select dl dd .delItem{display: none;float:right;padding: 0 5px;}
+.layui-form-select dl dd:hover .delItem{display:block;}
 .layui-form-select dl .addSelect{padding: 0 10px;line-height: 36px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;cursor: pointer;background: #f2f2f2;}
 .layui-form-select dl .addSelect:hover{background-color:lightgray;}
 .layui-table .layui-form-select{position: absolute;top:0;left:0;}

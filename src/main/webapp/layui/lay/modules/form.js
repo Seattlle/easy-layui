@@ -6,7 +6,7 @@
     
  */
  
-layui.define(['layer', 'laytpl'], function(exports){
+layui.define(['layer','dialog', 'laytpl'], function(exports){
   "use strict";
   
   var $ = layui.$
@@ -438,7 +438,7 @@ layui.define(['layer', 'laytpl'], function(exports){
           if(isTrue){
             //提示层风格
             if(verType === 'tips'){
-              layer.tips(errorText, function(){
+              $.tips(errorText, function(){
                 if(typeof othis.attr('lay-ignore') !== 'string'){
                   if(item.tagName.toLowerCase() === 'select' || /^checkbox|radio$/.test(item.type)){
                     return othis.next();
@@ -447,9 +447,9 @@ layui.define(['layer', 'laytpl'], function(exports){
                 return othis;
               }(), {tips: 1});
             } else if(verType === 'alert') {
-              layer.alert(errorText, {title: '提示', shadeClose: true});
+              $.alert(errorText, {title: '提示', shadeClose: true});
             } else {
-              layer.msg(errorText, {icon: 5, shift: 6});
+              $.msg(errorText, {icon: 5, shift: 6});
             }
             if(!device.android && !device.ios) item.focus(); //非移动设备自动定位焦点
             othis.addClass(DANGER);

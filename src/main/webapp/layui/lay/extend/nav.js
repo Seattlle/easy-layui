@@ -80,7 +80,7 @@ layui.define(['jquery','util'], function (exports) {
                         return '"';
                     }
                 }()+'><a href="'+(v.url?v.url:'javascript:;')+'" >'+(function () {
-                    var name='<cite>'+v.name+'</cite>'
+                    var name='<cite>'+v.name+'</cite>';
                     if(c.showIcon && v[iconName]){
                         if(v[iconName].indexOf('fa')>-1){
                             name='<i class="fa '+v[iconName]+'"></i>'+name;
@@ -152,11 +152,34 @@ layui.define(['jquery','util'], function (exports) {
                 url:c.url,
                 data:{sysCode:c.sysCode},
                 successed:function (res) {
-                    c.data=transData(res[response.dataName || util.webConfig.resName], response.idName, response.parentName,response.childName);
+                    c.data=util.transData(res[response.dataName || util.webConfig.resName], response.idName, response.parentName,response.childName);
                     $.data(_this, "nav",c);
                     methods.initDom.call(_this);
                 }
             })
+        },
+        findNodeByName:function(name){
+            var _this=this,
+                c  =  _this.data('nav'),
+                childName=c.response.childName;
+
+            name+="";
+
+            var findData=function (arr) {
+                for(var i=0;i<arr.length;i++){
+                    if((arr[i]['name']+"")===name){
+                        return arr[i];
+                    }
+                    if(arr[i][childName]){
+                        var result=findData(arr[i][childName]);
+                        if(result){
+                            return result;
+                        }
+                    }
+                }
+                return null;
+            };
+            return findData(c.data);
         },
         event:function () {
             var that=this,
@@ -348,31 +371,6 @@ layui.define(['jquery','util'], function (exports) {
         }
     };
 
-    var  transData = function(a, id, pid, children) {
-        if(!a){
-            return [];
-        }
-        var r = [],
-            hash = {},
-            i = 0,
-            j = 0,
-            len = a.length;
-        for (; i < len; i++) {
-            hash[a[i][id]] = a[i];
-        }
-        for (; j < len; j++) {
-            var aVal = a[j],
-                hashVP = hash[aVal[pid]];
-            if (hashVP) {
-                !hashVP[children] && (hashVP[children] = []);
-                hashVP[children].push(aVal);
-            } else {
-                r.push(aVal);
-            }
-        }
-        return r;
-    }
-
     //在插件中使用对象
     $.fn.nav  =  function (options) {
         var method  =  arguments[0];
@@ -386,7 +384,7 @@ layui.define(['jquery','util'], function (exports) {
             return this;
         }
         return method.apply(this, arguments);
-    }
+    };
 
     $(document).find('.'+ELEM).each(function (i,v) {
         $(v).nav()

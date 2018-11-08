@@ -9,11 +9,25 @@
       "child": [
         {
           "name": "船舶服务业经营者",
-          "value": "evaluationType_1"
-        },
-        {
-          "name": "港口经营者",
-          "value": "evaluationType_2"
+          "value": "evaluationType_1",
+          "child": [
+            {
+              "name": "船舶服务业经营者1",
+              "value": "evaluationType_2",
+              "child": [
+                {
+                  "name": "船舶服务业经营者2",
+                  "value": "evaluationType_3",
+                  "child": [
+                    {
+                      "name": "船舶服务业经营者3",
+                      "value": "evaluationType_4"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },

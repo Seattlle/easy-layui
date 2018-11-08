@@ -6,7 +6,7 @@
     
  */
  
-layui.define(['layer', 'form'], function(exports){
+layui.define(['dialog', 'form'], function(exports){
   "use strict";
   
   var $ = layui.$
@@ -200,7 +200,7 @@ layui.define(['layer', 'form'], function(exports){
         
         if(parentNode.tagName.toLowerCase() === 'pre'){
           if(e.shiftKey) return
-          layer.msg('请暂时用shift+enter');
+          $.msg('请暂时用shift+enter');
           return false;
         }
         iframeDOM.execCommand('formatBlock', false, '<p>');
@@ -399,7 +399,7 @@ layui.define(['layer', 'form'], function(exports){
                   ,alt: res.data.title
                 }, range);
               } else {
-                layer.msg(res.msg||'上传失败');
+                $.msg(res.msg||'上传失败');
               }
             }
           });
@@ -416,7 +416,7 @@ layui.define(['layer', 'form'], function(exports){
       }
       //帮助
       ,help: function(){
-        layer.open({
+        $.dialog({
           type: 2
           ,title: '帮助'
           ,area: ['600px', '380px']
@@ -472,13 +472,13 @@ layui.define(['layer', 'form'], function(exports){
     //触发内容区域
     body.on('click', function(){
       toolCheck.call(iframeWin, tools);
-      layer.close(face.index);
+      $.close(face.index);
     });
   }
   
   //超链接面板
   ,link = function(options, callback){
-    var body = this, index = layer.open({
+    var body = this, index = $.dialog({
       type: 1
       ,id: 'LAY_layedit_link'
       ,area: '350px'
@@ -512,11 +512,11 @@ layui.define(['layer', 'form'], function(exports){
         var eventFilter = 'submit(layedit-link-yes)';
         form.render('radio');  
         layero.find('.layui-btn-primary').on('click', function(){
-          layer.close(index);
+          $.close(index);
           body.focus();
         });
         form.on(eventFilter, function(data){
-          layer.close(link.index);
+          $.close(link.index);
           callback && callback(data.field);
         });
       }
@@ -536,10 +536,10 @@ layui.define(['layer', 'form'], function(exports){
     }();
     face.hide = face.hide || function(e){
       if($(e.target).attr('layedit-event') !== 'face'){
-        layer.close(face.index);
+        $.close(face.index);
       }
     }
-    return face.index = layer.tips(function(){
+    return face.index = $.tips(function(){
       var content = [];
       layui.each(faces, function(key, item){
         content.push('<li title="'+ key +'"><img src="'+ item +'" alt="'+ key +'"></li>');
@@ -559,7 +559,7 @@ layui.define(['layer', 'form'], function(exports){
             src: faces[this.title]
             ,alt: this.title
           });
-          layer.close(index);
+          $.close(index);
         });
         $(document).off('click', face.hide).on('click', face.hide);
       }
@@ -568,7 +568,7 @@ layui.define(['layer', 'form'], function(exports){
   
   //插入代码面板
   ,code = function(callback){
-    var body = this, index = layer.open({
+    var body = this, index = $.dialog({
       type: 1
       ,id: 'LAY_layedit_code'
       ,area: '550px'
@@ -609,11 +609,11 @@ layui.define(['layer', 'form'], function(exports){
         var eventFilter = 'submit(layedit-code-yes)';
         form.render('select');  
         layero.find('.layui-btn-primary').on('click', function(){
-          layer.close(index);
+          $.close(index);
           body.focus();
         });
         form.on(eventFilter, function(data){
-          layer.close(code.index);
+          $.close(code.index);
           callback && callback(data.field);
         });
       }
