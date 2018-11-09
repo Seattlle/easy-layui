@@ -54,7 +54,7 @@
             //     }
             // });
 
-            var data = [{field: 'name', title: '考评计划名称', readonly:true, type: 'search', verify: 'required',event: 'activeWine'},
+            var data = [{field: 'name', title: '考评计划名称', readonly:true, type: 'search',multiple:true,verify: 'required',event: 'activeWine'},
                 {field:'sex',title:'性别',type:'radio',hvalue:"1",values:[{title:'男',value:'1'},{title:'女',value:'2'}]},
                 {field:'birthDate',title:'生日',type:'date',value:'2018-10-27'},
                 {field:'area',title:'常驻地',type:'select',options:'{data:[{name:\'上海\',value:0},{name:\'广州\',value:1}]}'},
@@ -94,7 +94,7 @@
             })
 
 
-        })
+        });
         
         function activeWine(that) {
             console.log(that);

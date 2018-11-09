@@ -1275,18 +1275,21 @@ body .layui-util-face  .layui-layer-content{padding:0; background-color:#fff; co
 
 .layui-form-item ._search{
     background-color:#fff;
-    height: 38px;
+}
+.layui-form-item ._search input{
+    padding-right:30px;
 }
 .layui-form-item ._search .layui-icon {
     font-size: 24px;
     line-height: 38px;
     position: absolute;
-    top: 0;
+    top: 50%;
     right: 0;
     padding: 0 5px;
     border: 0;
     background: 0 0;
     color: #666;
+    margin-top: -19px;
 }
 
 .layui-form-item ._search .layui-date{

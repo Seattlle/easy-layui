@@ -46,6 +46,7 @@ layui.define([],function (exports) {
         '                            {{? item.value !== undefined }} value="{{=item.value }}" {{? }}' +
         '                            {{? item.verify }} lay-verify="{{=item.verify}}" {{? }}' +
         '                            {{? item.readonly }}  readonly {{? }}' +
+        '                            {{? item.style}} style="{{=item.style}}"{{?}}' +
         '                            placeholder="请输入{{=item.title}}" autocomplete="off" class="layui-input" ' +
         '                            {{? item.id }} id="{{=item.id}}" {{?}}/>' +
         '                    </div>' +
@@ -133,6 +134,7 @@ layui.define([],function (exports) {
         '                            {{? item.readonly }}  readonly {{? }}' +
         '                            {{? item.verify }}  lay-verify="{{=item.verify}}" {{? }}' +
         '                            data-options="{{=item.options||\'\'}}"' +
+        '                            {{? item.style}} style="{{=item.style}}"{{?}}' +
         '                            {{? item.id }} id="{{=item.id}}" {{?}}/>' +
         '                       </select>' +
         '                    </div>' +
@@ -144,6 +146,8 @@ layui.define([],function (exports) {
         '                        <textarea  id="{{=item.id||\'\'}}" name="{{=item.field||\'\' }}" placeholder="请输入内容" class="layui-textarea"' +
         '                            {{? item.isJustOne }} style="height: {{=item.height}}" {{? }}' +
         '                            {{? item.readonly}}  readonly {{? }}' +
+        '                            {{? item.verify }} lay-verify="{{=item.verify}}" {{? }}' +
+        '                            {{? item.style}} style="{{=item.style}}"{{?}}' +
         '                        >{{=item.value||"" }}</textarea>' +
         '                    </div>' +
         '              </div>' +
@@ -151,11 +155,20 @@ layui.define([],function (exports) {
         '            <div class="layui-form-item">' +
         '            <label class="layui-form-label">{{=item.title}}</label>' +
         '            <div class="layui-input-block _search">' +
+        '                      {{?item.multiple}} ' +
+        '                       <textarea  id="{{=item.id||\'\'}}" name="{{=item.field||\'\' }}" placeholder="请输入内容" class="layui-textarea"' +
+        '                            {{? item.readonly}}  readonly {{? }}' +
+        '                            {{? item.verify }} lay-verify="{{=item.verify}}" {{? }}' +
+        '                            {{? item.style}} style="{{=item.style}}"{{?}}' +
+        '                        >{{=item.value||"" }}</textarea>' +
+        '                       {{??}}' +
         '                        <input type="text" name="{{=item.field}}" placeholder="请输入{{=item.title}}" autocomplete="off" class="layui-input"' +
         '                            {{? item.value !== undefined}} value="{{=item.value }}" {{? }}' +
         '                            {{? item.verify }} lay-verify="{{=item.verify}}" {{? }}' +
         '                            {{? item.readonly }} readonly {{? }}' +
+        '                            {{? item.style}} style="{{=item.style}}"{{?}}' +
         '                        />' +
+        '                       {{?}}' +
         '                        <i class="layui-icon" ' +
         '                        {{? item.event }}  onclick="{{=item.event}}(this)" {{? }} ' +
         '                        >&#xe615;</i>' +
@@ -186,7 +199,7 @@ layui.define([],function (exports) {
         '</div>' +
         '<div id="grid" lay-filter="grid"></div>' +
         '</div>',
-    }
+    };
 
     window.tmpl=tmpl;
 
