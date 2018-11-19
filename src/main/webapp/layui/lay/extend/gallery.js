@@ -27,10 +27,10 @@ layui.define(['jquery', 'dialog'], function (exports) {
                 resizing:null ,
                 cancel: null
             }
-        }
+        };
         this.config=$.extend(true,_default,options);
         this.initEvent();
-    }
+    };
     gallery.prototype={
         initEvent:function () {
             var _this=this,
@@ -125,7 +125,7 @@ layui.define(['jquery', 'dialog'], function (exports) {
                 }
 
                 h=Math.ceil(h);
-                if(ratio!==1){
+                if(ratio<1){
                     h=o.popup.title.length>0?(h-43):h;
                 }
                 $(this).addClass(o.activeClass);
@@ -256,11 +256,11 @@ layui.define(['jquery', 'dialog'], function (exports) {
                 '.rotate270{' +
                 '    transform: rotate(270deg);' +
                 '    -webkit-transform: rotate(270deg);' +
-                '}'
+                '}';
 
             $('head').append(style);
         }
-    }
+    };
 
 
     var  $image,imageWidth,imageHeight,imgRatio,dragX,dragY,cW,cH,isVertical,thumbX,thumbY;
@@ -431,7 +431,7 @@ layui.define(['jquery', 'dialog'], function (exports) {
                 var rotateClass = $image.attr("class").match(/(rotate)(\d*)/);
                 if(rotateClass){
                     var nextDeg = (rotateClass[2] * 1 - 90) % 360;
-                    if (nextDeg < 0) nextDeg = 270
+                    if (nextDeg < 0) nextDeg = 270;
                     $image.removeClass(rotateClass[0]).addClass("rotate" + nextDeg);
                     _this.resizeImage(nextDeg);
                     isVertical = nextDeg === 90 || nextDeg === 270;
@@ -590,9 +590,9 @@ layui.define(['jquery', 'dialog'], function (exports) {
                 this.smallerImage(); //向下滚动
             }
         }
-    }
+    };
 
     exports('gallery',function (options) {
         return new gallery(options);
     })
-})
+});
